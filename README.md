@@ -71,7 +71,9 @@ Archive
 │  └─ DevOps
 │     └─ ACR_ACI.md
 ├─ QA
-│  └─ QUALITY_ASSURANCE.md
+│  ├─ (QA).md
+│  ├─ Product_Backlog.md
+│  └─ Testes_Software.md
 ├─ README.md
 ├─ SQL
 │  ├─ DATABASE.md

@@ -1,4 +1,7 @@
 
+**Tags**: [qa/testes]
+↩ [[(QA)]]
+
 • **O que são testes?**
 
 » Testar é o processo de executar um programa de software com a **intenção de encontrar erros**
@@ -44,7 +47,7 @@
 
 » As **causas-raiz** de efeitos são as primeiras ações ou condições que contribuem no surgimento de um defeito.
 
-» A análise de **causa-raiz** ( *Root-cause Analysis - RCA* ) é a atividade de investigar o defeito para identificar suas causas-raízes, de tal modo que possam ser implementadas melhorias que evitem que tais erros voltem a se repetiri no futuro.
+» A análise de **causa-raiz** ( *Root-cause Analysis - RCA* ) é a atividade de investigar o defeito para identificar suas causas-raízes, de tal modo que possam ser implementadas melhorias que evitem que tais erros voltem a se repetir no futuro.
 
 » Os efeitos são as consequências das falhas, como reclamações de clientes, perdas de receita ou reputação entre outros.
 
@@ -113,7 +116,7 @@
 
 ↪ **Integration Tests ( Meio )**: Teste de comunicação entre diferentes componentes, módulos ou serviços externos ( com banco de dados e APIs ). Executados em quantidade moderada.
 
-↪ **UI Tests ( Topo )**: Validam o fluxo completo da aplicação atráves da interface gráfica, simulando a experiência do usuário final. Por serem frágeis e complexos existem em maior quantidade.
+↪ **UI Tests ( Topo )**: Validam o fluxo completo da aplicação através da interface gráfica, simulando a experiência do usuário final. Por serem frágeis e complexos existem em maior quantidade.
 
 ↪ **Manual Tests ( Nuvem )**: Ficam no topo fora do fluxo automatizado ideal. Devem ser pontuais, voltados para a exploração e validação de usabilidade humana, não para regressão continua.
 
@@ -137,22 +140,73 @@
 
 » Avaliam características do software, como usabilidade, perfomance ou segurança. O teste não funcional valida "**Quão bem**" o sistema se comporta.
 
-» A norma ISO 25010 define um modelo de oito caracteristicas de qualidade de software, com diversas classe e subclasses que podem ser objeto de testes **não-funcionais**:
+» A norma ISO 25010 define um modelo de oito características de qualidade de software, com diversas classe e subclasses que podem ser objeto de testes **não-funcionais**:
 
-- Teste de perfomance
-- Teste de Compatibilidade
-- Teste de Usabilidade
-- Teste de Acessibilidade
-- Teste de Confiabildiade
-- Teste de Segurança
+- Teste de Perfomance.
+- Teste de Compatibilidade.
+- Teste de Usabilidade.
+- Teste de Acessibilidade.
+- Teste de Confiabilidade.
+- Teste de Segurança.
 - Outros.
 
 ----------------------
 
 • **Caixa Branca | Preta | Cinza 
 
+↪ **Testes de Caixa-Branca**: Testes baseados na **estrutura interna ou na implementação do sistema**, que pode incluir código-fonte, arquitetura, fluxos de trabalho e fluxos de dados dentro do sistema. Portanto o testador deve entender como o **sistema foi implementado**
 
+↪ **Testes de Caixa-Preta**: Testes baseados na **especificação ou comportamento**, fundamentados na documentação ( requisitos, casos de uso, regras de negócio, outros ), se concentrando nas entradas e saídos do objeto de teste **sem referência a sua estrutura interna**.
 
+↪ **Testes de Caixa-Cinza**: É uma combinação de ambos os métodos, onde a estrutura de interna do software é **parcialmente conhecida** pelo testador. Envolve o acesso a estrutura de dados e algoritmos, mas ainda testando no nível de usuário e usando técnicas de caixa-preta.
 
+• **Técnicas de Teste**
 
-•°» ↪→
+↪ **Cobertura de Instrução:** técnica que mede quantas linhas (instruções) do código foram executadas pelos testes. O resultado é uma porcentagem: instruções executadas dividido pelo total de instruções existentes. O ideal é chegar a 100%, embora isso nem sempre seja viável na prática.
+
+↪ **Cobertura de Decisão:** técnica que verifica se todos os pontos de decisão do código (como `IF` ou `SWITCH/CASE`) foram testados em seus possíveis resultados — ou seja, se cada caminho que o fluxo pode tomar já foi percorrido pelos testes. A limitação dessa técnica é que ela não analisa como decisões com múltiplas condições são combinadas, podendo deixar passar defeitos causados por essas combinações.
+
+↪ **Cobertura de Condição/Decisão Modificada (MC/DC):** técnica mais rigorosa, usada quando uma decisão tem múltiplas condições. Ela verifica se cada condição, isoladamente, é capaz de influenciar o resultado final da decisão — garantindo que cada uma foi testada de forma independente. Por isso, oferece um nível de cobertura mais forte do que a cobertura de instrução e a de decisão.
+
+↪ **Partição de Equivalência:** técnica que agrupa os valores de entrada em "grupos" (partições) que devem se comportar da mesma forma no sistema. Em vez de testar todos os valores possíveis, testa-se apenas um valor representativo de cada grupo — assume-se que, se ele funcionar, os demais do mesmo grupo também funcionarão. Exemplos de grupos: entradas válidas x inválidas, letras x números x caracteres especiais, valores dentro x fora de uma faixa.
+
+↪ **Análise de Valor Limite (BVA):** técnica que foca nos "limites" entre esses grupos, já que é ali que os erros são mais comuns (é mais fácil errar a validação de uma fronteira do que de um valor qualquer no meio do intervalo). Normalmente se testam 3 valores por limite: o valor exato do limite, um valor logo antes e um logo depois.
+
+» **Exemplo**: um campo que aceita números de 1 a 1000.
+
+- Partições: válidos (1–1000), inválidos (letras, vazio), fora da faixa (<1 ou >1000)
+- Valores-limite: 0, 1, 2 (limite inferior) e 999, 1000, 1001 (limite superior)
+
+↪ **Tabela de Decisão:** técnica que organiza em formato de tabela as combinações de condições de negócio e as ações que cada combinação deve gerar. Cada coluna da tabela representa uma combinação diferente de condições (uma regra) e deve virar um caso de teste.
+
+» **Exemplo**: um e-commerce dá 10% de desconto em Eletrônicos acima de R$500 (ou 15% se o cliente for VIP), e 10% de desconto em Eletrodomésticos acima de R$1000 (ou 15% se for VIP). A tabela cruza categoria + valor + status VIP para definir, em cada combinação, se o desconto é de 10%, 15% ou nenhum.
+
+↪ **Transição de Estado:** técnica usada quando o sistema tem diferentes "estados" (situações) e passa de um para o outro através de eventos (ex.: apertar um botão). Testa-se se as transições válidas funcionam corretamente e também se o sistema reage bem a tentativas de transições inválidas. O ideal é mapear isso em um diagrama de estados e depois em uma tabela, gerando um caso de teste para cada transição.
+
+» **Exemplo**:  um relógio simples tem os estados "Mostrar Hora", "Ajustar Hora", "Mostrar Data" e "Ajustar Data". O botão MODE alterna entre hora e data; o botão SET entra no modo de ajuste. Cada combinação de estado + botão pressionado vira um teste.
+
+----------------------------
+
+• **Outros Tipos de Teste**
+
+↪ **Teste de Confirmação:** depois que um bug é corrigido, refaz-se o teste que originalmente falhou, para confirmar que o problema realmente foi resolvido.
+
+↪ **Teste de Regressão:** verifica se uma mudança no código (correção ou nova funcionalidade) não quebrou, sem querer, alguma outra parte do sistema que já funcionava. Como esses testes são repetidos a cada nova versão, são ótimos candidatos à automação.
+
+↪ **Smoke Test:** um conjunto pequeno de testes que checa se as funções básicas do sistema estão funcionando. É o primeiro teste a ser rodado numa nova versão. Se ele falhar, nem faz sentido continuar testando o resto.
+
+↪ **Sanity Test:** parecido com o Smoke Test, mas usado quando há pouquíssimo tempo disponível: um conjunto enxuto de testes simples que cobre as principais funcionalidades, geralmente sendo o único teste possível dado o prazo apertado.
+
+↪ **Teste Positivo (caminho feliz):** testa se o sistema funciona corretamente quando tudo é feito do jeito certo, com dados válidos. Verifica se o sistema faz o que deveria fazer.
+
+↪ **Teste Negativo (caminho errado):** testa como o sistema reage a dados inválidos ou ações incorretas. Verifica se ele lida bem com erros e mostra as mensagens adequadas, ou seja, se o sistema não faz o que não deveria fazer.
+
+↪ **Suposição de Erros:** o testador usa sua experiência (bugs comuns, erros do passado, falhas em sistemas parecidos) para adivinhar onde o sistema pode falhar e direcionar os testes para esses pontos.
+
+↪**Teste Exploratório:** técnica mais livre e criativa, sem casos de teste pré-definidos. O testador explora o sistema na hora, registrando o que encontra. É ótimo para complementar as outras técnicas e descobrir problemas que os testes formais não previram.
+
+------------------------------------------------------------------
+
+° **Relacionados**
+
+- [[Product_Backlog]]
